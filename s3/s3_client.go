@@ -1,7 +1,6 @@
 package s3
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -106,7 +105,10 @@ func (c Client) Upload(fileGlob string, to string, sourcesDir string) error {
 	}
 
 	if fileSize > 20000000000 {
-		return errors.New("file size exceeds 20 gb limit")
+		// CF Dev assets regularly exceed 20GB.
+		// Commenting for release within CI.
+
+		// return errors.New("file size exceeds 20 gb limit")
 	}
 
 	remotePath := filepath.Join(to, filepath.Base(localPath))
